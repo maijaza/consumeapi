@@ -20,6 +20,8 @@ func Get(url string) {
 	}
 
 	body, readErr := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
 	if readErr != nil {
 		fmt.Println(readErr)
 	}
@@ -35,6 +37,7 @@ func Post(url string) {
 	})
 
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(data))
+	defer resp.Body.Close()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -61,6 +64,7 @@ func CustomPost(url string) {
 	}
 
 	resp, err := client.Do(req)
+	defer resp.Body.Close()
 
 	if err != nil {
 		fmt.Println(err)
